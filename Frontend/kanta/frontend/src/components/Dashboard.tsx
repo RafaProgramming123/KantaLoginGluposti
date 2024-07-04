@@ -2,14 +2,20 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import { logout } from '../slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const auth = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleCreateBooking = () => {
+    navigate('/waste-type-selection');
   };
 
   if (!auth.token) {
@@ -26,7 +32,10 @@ const Dashboard: React.FC = () => {
       >
         <h2 className="text-3xl font-semibold text-green-600 mb-4">Dashboard</h2>
         <p className="text-gray-700 mb-4">Welcome to Kanta, {auth.user?.fullName || auth.user?.companyName || auth.user?.institutionName}</p>
-        <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition duration-300 ease-in-out">
+        <button onClick={handleCreateBooking} className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg transition duration-300 ease-in-out">
+          Create Booking
+        </button>
+        <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition duration-300 ease-in-out mt-4">
           Logout
         </button>
       </motion.div>
